@@ -20,10 +20,14 @@ namespace RScript
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                    "~/Scripts/jquery.form.js",
+                    "~/Scripts/jquery.bootgrid.js",
+                     "~/Scripts/jquery.bootgrid.fa.js",
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
         }

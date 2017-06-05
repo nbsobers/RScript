@@ -15,21 +15,7 @@
             </button>
             <a class="navbar-brand" href="#">RScript</a>
         </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        @*<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>*@
-        <!-- /.navbar-collapse -->
+       
     </div>
     <!-- /.container -->
 </nav>
@@ -40,9 +26,10 @@
             @*<p class="lead">Shop Name</p>*@
             <p></p>
             <div class="list-group">
-                <a href="#" class="list-group-item active">Category 1</a>
-                <a href="#" class="list-group-item">Category 2</a>
-                <a href="#" class="list-group-item">Category 3</a>
+                <a href="/home/index?modelId=1" class="list-group-item @(ViewBag.modelId == 1 ? "active" : "") ">Model 1</a>
+                <a href="/home/index?modelId=2" class="list-group-item @(ViewBag.modelId == 2 ? "active" : "") ">Model 2</a>
+                <a href="/home/index?modelId=3" class="list-group-item @(ViewBag.modelId == 3 ? "active" : "") ">Model 3</a>
+
             </div>
         </div>
         <div class="col-md-9">
@@ -50,13 +37,26 @@
             <div class="well">                
                 <div class="row">
                     <div class="col-md-12">
-                        File upload
+                        <form method="post" enctype="multipart/form-data" action="/home/GenerateReort?modelId=@ViewBag.modelId">                           
+                            <input type="file" name="inputFile" />
+                            <br />
+                            <button id="btnGenerate" type="submit"  class="btn btn-primary">Generate Report</button>
+                        </form>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-12">
-                        Grid
+                        <table id="grid-model1" class="table table-condensed table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th data-column-id="Id">Id</th>
+                                    <th data-column-id="Code">Code</th>
+                                    <th data-column-id="Country">Country</th>
+                                    <th data-column-id="Limit">Limit</th>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
                
@@ -65,3 +65,43 @@
     </div>
 </div>
 <!-- /.container -->
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        console.log('init');
+        
+        $('form').ajaxForm({
+            beforeSend: function () {
+                $('#btnGenerate').text('Processing..');
+            },
+            uploadProgress: function (event, position, total, percentComplete) {
+
+            },
+            success: function () {
+                console.log("success");
+                showGrid();
+                $('#btnGenerate').text('Generate Report');
+            },
+            complete: function (xhr) {
+                console.log("complete");
+            }
+        });
+
+        
+        function showGrid() {
+            $("#grid-model1").bootgrid({
+                ajax: true,               
+                url: "/home/getData", 
+                templates: {
+                    search: "",
+                    actions: "",
+                },
+            });
+        }
+
+    });
+
+
+
+</script>
