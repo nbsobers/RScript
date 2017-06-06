@@ -172,12 +172,17 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <None Include="Output\Generated.csv" />
+    <Content Include="Reference\IBU  R scripts.txt" />
+    <Content Include="Reference\image.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Reference\cc.csv" />
+    <Content Include="Reference\ccdmm.csv" />
+    <Content Include="Reference\image.png_4" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />

@@ -45,8 +45,16 @@ namespace RConsole
                     Console.WriteLine("Group1: [{0}]", string.Join(", ", group1));
                     Console.WriteLine("Group2: [{0}]", string.Join(", ", group2));
                     Console.WriteLine("P-value = {0:0.000}", p);
+
+                    //Rscript.exe D:\Dev\POC\RScript\RConsole\sampleArg.R 1
+                    //http://inut-santa.blogspot.ae/2017/01/executing-r-script-files-from-c-with.html
+
+                    string[] input = new string[2] { "3","4" };
+                    engine.SetCommandLineArguments(input);
+                    engine.Evaluate(@"source('D:/Dev/POC/RScript/RConsole/sampleArg.R')");
+
                     Console.ReadKey();
-                  
+
                 }
             }
             catch (Exception ex)
