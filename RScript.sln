@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+VisualStudioVersion = 15.0.26430.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RScript", "RScript\RScript.csproj", "{3A970E83-7A7E-4924-8A19-0620443E2D76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RConsole", "RConsole\RConsole.csproj", "{BF2CB5B0-4BEE-4481-8713-FBAE35E74A0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{3A970E83-7A7E-4924-8A19-0620443E2D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A970E83-7A7E-4924-8A19-0620443E2D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A970E83-7A7E-4924-8A19-0620443E2D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF2CB5B0-4BEE-4481-8713-FBAE35E74A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF2CB5B0-4BEE-4481-8713-FBAE35E74A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF2CB5B0-4BEE-4481-8713-FBAE35E74A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF2CB5B0-4BEE-4481-8713-FBAE35E74A0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
