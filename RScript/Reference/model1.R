@@ -22,11 +22,11 @@ print(ou)
 
 
 
-
+ 
 
 
 s <- "SELECT  *
-  FROM [AdventureWorks2016CTP3].[Purchasing].[PurchaseOrderDetail]
+  FROM [Purchasing].[PurchaseOrderDetail]
 
   where purchaseorderID = ?   and     StockedQty <= ? "
 

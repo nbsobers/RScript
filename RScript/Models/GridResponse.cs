@@ -24,12 +24,27 @@ namespace RScript.Models
 
     public class Model1Response
     {
-        public int Id { get; set; }
-     
-        public string Code { get; set; }
-      
-        public string Country { get; set; }
+        public int PurchaseOrderID  { get; set; }
 
-        public decimal Limit { get; set; }
+        public int PurchaseOrderDetailID { get; set; }
+
+        public DateTime DueDate { get; set; }
+
+        public Decimal OrderQty { get; set; }
+
+        public int ProductID { get; set; }
+
+        public Decimal UnitPrice { get; set; }
+
+        public Decimal LineTotal { get; set; }
+
+        public int ReceivedQty { get; set; }
+
+        public int RejectedQty { get; set; }
+
+        public int StockedQty { get; set; }
+
+        public DateTime ModifiedDate { get; set; }
+        
     }
 }
