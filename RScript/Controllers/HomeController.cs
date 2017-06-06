@@ -60,7 +60,7 @@ namespace RScript.Controllers
                             
 
                             engine.SetCommandLineArguments(input);
-                            engine.Evaluate(@"source(" + rScriptFile + ")");
+                            engine.Evaluate(@"source('" + rScriptFile + "')");
                             //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
                             engine.Dispose();
                             Console.ReadKey();

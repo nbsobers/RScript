@@ -1,15 +1,22 @@
-args <- commandArgs(trailingOnly = TRUE)
+args <- commandArgs(trailingOnly = FALSE)
 
 library(RODBCext)
 library(RODBC)
 
 
-f<- args[1]
-e <-args[2]
-d<- args[3]
-t <- args[4]
-cf<-args[5]
 
+f <- args[2]
+e <-args[3]
+d<- args[4]
+t <- args[5]
+cf<-args[6]
+
+
+print(f)
+print(e)
+print(d)
+print(t)
+print(cf)
 
 
 

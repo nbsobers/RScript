@@ -185,6 +185,7 @@
     <Content Include="Reference\ccdmm.csv" />
     <Content Include="Reference\image.png_4" />
     <Content Include="Reference\cmm1.R" />
+    <Content Include="Reference\samplearg.R" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
