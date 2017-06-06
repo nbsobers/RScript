@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GenerateReportModel.cs" />
     <Compile Include="Models\GridResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -171,7 +172,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <None Include="Output\Generated.csv" />
+    <None Include="Output\BK_Generated.csv" />
     <Content Include="Reference\IBU  R scripts.txt" />
     <Content Include="Reference\image.png" />
     <Content Include="Scripts\bootstrap.js" />
@@ -183,6 +184,7 @@
     <Content Include="Reference\cc.csv" />
     <Content Include="Reference\ccdmm.csv" />
     <Content Include="Reference\image.png_4" />
+    <Content Include="Reference\cmm1.R" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />

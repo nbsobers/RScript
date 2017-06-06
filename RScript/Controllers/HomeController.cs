@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using RDotNet;
 
 namespace RScript.Controllers
 {
@@ -29,29 +30,54 @@ namespace RScript.Controllers
         }
 
         [HttpPost]
-        public JsonResult GenerateReort(int modelId)
-        {           
-            if (Request.Files.Count > 0)
+        public JsonResult GenerateReort(GenerateReportModel model)
+        {       
+            try
             {
-                var file = Request.Files[0];
+                if (Request.Files.Count > 0)
+                {
+                    var file = Request.Files[0];
 
-                if (file != null && file.ContentLength > 0)
-                {  
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
-                    file.SaveAs(path);
+                    if (file != null && file.ContentLength > 0)
+                    {  
+                        var fileName = Path.GetFileName(file.FileName);
+                        var inputFilePath = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
+                        file.SaveAs(inputFilePath);
 
-                    using (TextReader fileReader = System.IO.File.OpenText(path))
-                    {
-                        var csv = new CsvReader(fileReader);
-                        var records = csv.GetRecords<CSVRequest>().ToList();                       
+                        //R Process
+                        REngine.SetEnvironmentVariables();
+                        using (REngine engine = REngine.GetInstance())
+                        {
+                            var rScriptFile = Path.Combine(Server.MapPath("~/Reference/"), "cmm1.R");
+                            var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
+
+                            string[] input = new string[5];                           
+                            input[0] = @"LPT-002384\SQLEXPRESS";//model.Server;
+                            input[1] = "AdventureWorks2016CTP3";//model.Database;
+                            input[2] = "sa";//model.Username;
+                            input[3] = "Soders@123";//model.Password;
+                            input[4] = inputFilePath;
+                            
+
+                            engine.SetCommandLineArguments(input);
+                            engine.Evaluate(@"source(" + rScriptFile + ")");
+                            //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
+                            engine.Dispose();
+                            Console.ReadKey();
+                           
+                        }
                     }
                 }
+
+            }
+            catch (Exception ex)
+            {
+
             }
 
             return null;
         }
-
+      
         public JsonResult GetData()
         {
             var path = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");

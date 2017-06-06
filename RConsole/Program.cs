@@ -52,6 +52,7 @@ namespace RConsole
                     string[] input = new string[2] { "3","4" };
                     engine.SetCommandLineArguments(input);
                     engine.Evaluate(@"source('D:/Dev/POC/RScript/RConsole/sampleArg.R')");
+                    //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
 
                     Console.ReadKey();
 
