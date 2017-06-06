@@ -57,9 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="model1.R" />
     <None Include="packages.config" />
     <None Include="sample.R" />
     <None Include="sampleArg.R" />
+    <Content Include="temp.R" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

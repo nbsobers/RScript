@@ -48,22 +48,26 @@ namespace RScript.Controllers
                         REngine.SetEnvironmentVariables();
                         using (REngine engine = REngine.GetInstance())
                         {
-                            var rScriptFile = Path.Combine(Server.MapPath("~/Reference/"), "cmm1.R");
+                            var rScriptFile = Path.Combine(Server.MapPath("~/Reference/"), string.Format("model{0}.R",model.ModelId));
                             var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
 
-                            string[] input = new string[5];                           
-                            input[0] = @"LPT-002384\SQLEXPRESS";//model.Server;
-                            input[1] = "AdventureWorks2016CTP3";//model.Database;
-                            input[2] = "sa";//model.Username;
-                            input[3] = "Soders@123";//model.Password;
+                            string[] input = new string[6];                           
+                            input[0] = model.Server;
+                            input[1] = model.Database;
+                            input[2] = model.Username;
+                            input[3] = model.Password;
                             input[4] = inputFilePath;
-                            
+                            input[5] = outputFile;
+
 
                             engine.SetCommandLineArguments(input);
-                            engine.Evaluate(@"source('" + rScriptFile + "')");
+                            //engine.Evaluate(@"source('" + rScriptFile + "')");
+                            engine.Evaluate(@"source('C:\\01_Dev\\POC\\RScript\\RScript\\Reference\\model1.R')");
                             //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
+                            //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv
+                            //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv C:\01_Dev\POC\RScript\RScript\Output\Generated.csv
                             engine.Dispose();
-                            Console.ReadKey();
+                            
                            
                         }
                     }
@@ -72,7 +76,7 @@ namespace RScript.Controllers
             }
             catch (Exception ex)
             {
-
+                return Json(ex);
             }
 
             return null;

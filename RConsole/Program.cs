@@ -50,15 +50,17 @@ namespace RConsole
                     //http://inut-santa.blogspot.ae/2017/01/executing-r-script-files-from-c-with.html
 
                     //string[] input = new string[2] { "3","4" };
-                    string[] input = new string[5];
-                    input[0] = "LPT-002384\\SQLEXPRESS";//model.Server;
+                    string[] input = new string[6];
+                    input[0] = "SOBS-DELL-3470\\MSSQL2016";//model.Server;
                     input[1] = "AdventureWorks2016CTP3";//model.Database;
-                    input[2] = "sa";//model.Username;
-                    input[3] = "Soders@123";//model.Password;
-                    input[4] = "D:\\Dev\\POC\\RScript\\RScript\\Reference\\cc.csv";
+                    input[2] = "rscript";//model.Username;
+                    input[3] = "Rscript@123";//model.Password;
+                    input[4] = "C:\\01_Dev\\POC\\RScript\\RScript\\Uploads\\cc.csv";
+                    input[5] = "C:\\01_Dev\\POC\\RScript\\RScript\\Output\\Generated.csv";
 
                     engine.SetCommandLineArguments(input);
-                    engine.Evaluate(@"source('D:\\Dev\\POC\\RScript\\RScript\\Reference\\cmm1.R')");
+                    engine.Evaluate(@"source('C:\\01_Dev\\POC\\RScript\\RScript\\Reference\\model1.R')");
+                    //engine.Evaluate(@"source('C:\\01_Dev\\POC\\RScript\\RConsole\\model1.R')");
                     //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
                     //RScript D:\\Dev\\POC\\RScript\\RScript\\Reference\\cmm1.R LPT-002384\\SQLEXPRESS AdventureWorks2016CTP3 sa Soders@123 D:\\Dev\\POC\\RScript\\RScript\\Reference\\cc.csv
                     Console.ReadKey();

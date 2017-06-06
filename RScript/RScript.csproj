@@ -172,6 +172,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Commands\model1.R" />
+    <Content Include="Commands\temp.R" />
     <None Include="Output\BK_Generated.csv" />
     <Content Include="Reference\IBU  R scripts.txt" />
     <Content Include="Reference\image.png" />
@@ -186,6 +188,8 @@
     <Content Include="Reference\image.png_4" />
     <Content Include="Reference\cmm1.R" />
     <Content Include="Reference\samplearg.R" />
+    <Content Include="Reference\temp.R" />
+    <Content Include="Reference\model1.R" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
