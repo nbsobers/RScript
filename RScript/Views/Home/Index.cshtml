@@ -35,7 +35,7 @@
         <div class="col-md-9">
             <p></p>
             <div class="well">  
-                <form method="post" enctype="multipart/form-data" action="/Rscript/home/GenerateReort?modelId=@ViewBag.modelId">
+                <form method="post" enctype="multipart/form-data" action="/home/GenerateReort?modelId=@ViewBag.modelId">
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" name="ModelId" placeholder="Server" value="@ViewBag.ModelId" />
@@ -111,7 +111,7 @@
 
         $("#grid-model1").bootgrid({
             ajax: true,
-            url: "/Rscript/home/getData?a",
+            url: "/home/getData?a",
             templates: {
                 search: "",
                 actions: "",
