@@ -7,21 +7,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RDotNet;
+using log4net;
 
 namespace RScript.Controllers
 {
-    public class CSVRequest
-    {
-        public int Id { get; set; }
-
-        public string Code { get; set; }
-    }
 
     public class HomeController : Controller
     {
+        private static log4net.ILog Log { get; set; }
+        ILog log = log4net.LogManager.GetLogger(typeof(HomeController));
+        private static REngine engine;
+
+        public HomeController()
+        {
+            if (engine != null) return;
+
+            engine = REngine.GetInstance();
+            engine.Initialize();
+        }
+
         public ActionResult Index(int? modelId)
         {
-            if(modelId.HasValue)
+            if (modelId.HasValue)
                 ViewBag.modelId = modelId;
             else
                 ViewBag.modelId = 1;
@@ -31,60 +38,68 @@ namespace RScript.Controllers
 
         [HttpPost]
         public JsonResult GenerateReort(GenerateReportModel model)
-        {       
+        {
             try
             {
+                log.Debug(model);
+
                 if (Request.Files.Count > 0)
                 {
                     var file = Request.Files[0];
 
                     if (file != null && file.ContentLength > 0)
-                    {  
+                    {
                         var fileName = Path.GetFileName(file.FileName);
                         var inputFilePath = Path.Combine(Server.MapPath("~/Uploads/"), fileName);
                         file.SaveAs(inputFilePath);
 
                         //R Process
-                        REngine.SetEnvironmentVariables();
-                        using (REngine engine = REngine.GetInstance())
-                        {
-                            var rScriptFile = Path.Combine(Server.MapPath("~/Reference/"), string.Format("model{0}.R",model.ModelId));
-                            var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
+                        //REngine.SetEnvironmentVariables();
+                        //RHelper.InitREngine();
+                        //REngine engine = RHelper.engine;
+                        //REngine engine = REngine.GetInstance();
 
-                            string[] input = new string[6];                           
-                            input[0] = model.Server;
-                            input[1] = model.Database;
-                            input[2] = model.Username;
-                            input[3] = model.Password;
-                            input[4] = inputFilePath;
-                            input[5] = outputFile;
+                        //using (REngine engine = REngine.GetInstance())
+                        //{
+                        var rScriptFile = Path.Combine(Server.MapPath("~/Commands/"), string.Format("model{0}.R", model.ModelId));
+                        rScriptFile = rScriptFile.Replace("\\", "/");
+                        log.Debug(rScriptFile);
+                        var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
 
-                            rScriptFile=rScriptFile.Replace("\\", "/");
+                        string[] input = new string[6];
+                        input[0] = model.Server;
+                        input[1] = model.Database;
+                        input[2] = model.Username;
+                        input[3] = model.Password;
+                        input[4] = inputFilePath;
+                        input[5] = outputFile;
 
-                            engine.SetCommandLineArguments(input);
+                        log.Debug(input);
 
-                            string expression = string.Format("source('{0}')", rScriptFile);
-                            engine.Evaluate(expression);
-                           // engine.Evaluate("source('C:/01_Dev/POC/RScript/RScript/Reference/model1.R')");
-                            //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
-                            //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv
-                            //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv C:\01_Dev\POC\RScript\RScript\Output\Generated.csv
-                            engine.Dispose();
-                            
-                           
-                        }
+                        engine.SetCommandLineArguments(input);
+
+                        string expression = string.Format("source('{0}')", rScriptFile);
+                        engine.Evaluate(expression);
+                        // engine.Evaluate("source('C:/01_Dev/POC/RScript/RScript/Reference/model1.R')");
+                        //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
+                        //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv
+                        //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv C:\01_Dev\POC\RScript\RScript\Output\Generated.csv
+                        //engine.Dispose();
+
+                        //}
                     }
                 }
 
             }
             catch (Exception ex)
             {
+                log.Error(ex);
                 return Json(ex);
             }
 
             return null;
         }
-      
+
         public JsonResult GetData()
         {
             var path = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
@@ -105,6 +120,6 @@ namespace RScript.Controllers
 
             return Json(gridRes);
         }
-      
+
     }
 }

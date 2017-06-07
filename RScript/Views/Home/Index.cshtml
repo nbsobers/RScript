@@ -35,7 +35,7 @@
         <div class="col-md-9">
             <p></p>
             <div class="well">  
-                <form method="post" enctype="multipart/form-data" action="/home/GenerateReort?modelId=@ViewBag.modelId">
+                <form method="post" enctype="multipart/form-data" action="/Rscript/home/GenerateReort?modelId=@ViewBag.modelId">
                     <div class="row">
                         <div class="col-md-12">
                             <input type="hidden" name="ModelId" placeholder="Server" value="@ViewBag.ModelId" />
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" name="Server" placeholder="Server" value="SOBS-DELL-3470\MSSQL2016" />
+                            <input type="text" name="Server" placeholder="Server" value="LPT-002384\SQLEXPRESS" />
                             <input type="text" name="Database" placeholder="Database" value="AdventureWorks2016CTP3" />
                            
                         </div>
@@ -62,14 +62,21 @@
             </form>       
             <hr>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12" style="overflow-x:scroll">
                     <table id="grid-model1" class="table table-condensed table-hover table-striped">
                         <thead>
                             <tr>
-                                <th data-column-id="Id">Id</th>
-                                <th data-column-id="Code">Code</th>
-                                <th data-column-id="Country">Country</th>
-                                <th data-column-id="Limit">Limit</th>
+                                <th data-column-id="PurchaseOrderID">PurchaseOrderID</th>
+                                <th data-column-id="PurchaseOrderDetailID">PurchaseOrderDetailID</th>
+                                <th data-column-id="DueDate">DueDate</th>
+                                <th data-column-id="OrderQty">OrderQty</th>
+                                <th data-column-id="ProductID">ProductID</th>
+                                <th data-column-id="UnitPrice">UnitPrice</th>
+                                <th data-column-id="LineTotal">LineTotal</th>
+                                <th data-column-id="ReceivedQty">ReceivedQty</th>
+                                <th data-column-id="RejectedQty">RejectedQty</th>
+                                <th data-column-id="StockedQty">StockedQty</th>
+                                <th data-column-id="ModifiedDate">ModifiedDate</th>
                             </tr>
                         </thead>
                     </table>
@@ -102,16 +109,18 @@
             }
         });
 
-        
+        $("#grid-model1").bootgrid({
+            ajax: true,
+            url: "/Rscript/home/getData?a",
+            templates: {
+                search: "",
+                actions: "",
+            },
+        });
+
         function showGrid() {
-            $("#grid-model1").bootgrid({
-                ajax: true,               
-                url: "/home/getData", 
-                templates: {
-                    search: "",
-                    actions: "",
-                },
-            });
+            $('#grid-model1').bootgrid('reload');
+            
         }
 
     });
