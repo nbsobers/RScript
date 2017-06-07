@@ -57,6 +57,7 @@
                     <div class="row">
                         <div class="col-md-12">                           
                             <button id="btnGenerate" type="submit" class="btn btn-primary">Generate Report</button>
+                            <button id="btnClear" type="button" class="btn btn-warning">Clear</button>
                         </div>
                     </div>
             </form>       
@@ -117,16 +118,24 @@
 
         $("#grid-model1").bootgrid({
             ajax: true,
-            url: "/home/getData?a",
+            url: "/home/getData",
             templates: {
                 search: "",
                 actions: "",
             },
         });
 
+
+        $("#btnClear").click(function () {
+            $('#btnClear').text('Processing..');
+            $.get("/home/ClearData", function (data) {
+                showGrid();
+                $('#btnClear').text('Clear');
+            });
+        });
+
         function showGrid() {
-            $('#grid-model1').bootgrid('reload');
-            
+            $('#grid-model1').bootgrid('reload');            
         }
 
     });

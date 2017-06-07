@@ -91,7 +91,7 @@ namespace RScript.Controllers
                         var rScriptFile = Path.Combine(Server.MapPath("~/Commands/"), string.Format("model{0}.R", model.ModelId));
                         rScriptFile = rScriptFile.Replace("\\", "/");
                         log.Debug(rScriptFile);
-                        var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
+                        var outputFile = getOutputFile(); //Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
 
                         string[] input = new string[6];
                         input[0] = model.Server;
@@ -161,6 +161,35 @@ namespace RScript.Controllers
                 log.Error(ex);
                 return Json(ex);
             }
+        }
+
+        public JsonResult ClearData()
+        {            
+            var response = new ResponseModel() { IsSuccess = false };
+            try
+            {
+                var outputFile = getOutputFile();
+                if (System.IO.File.Exists(outputFile))
+                {
+                    System.IO.File.Delete(outputFile);
+                }
+
+                response.IsSuccess = true;
+
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);              
+                response.Message = ex.Message;
+            }
+
+            return Json(response,JsonRequestBehavior.AllowGet);
+        }
+
+        private string getOutputFile()
+        {
+            var outputFile = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
+            return outputFile;
         }
 
     }
