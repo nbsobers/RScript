@@ -1,0 +1,122 @@
+
+command line 
+**************************************
+C:\Program Files\R\R-3.2.5\bin>Rscript  C:\data\cmm.R LAPTOP-LI9A71QA  AdventureWorks2014 mm1 test C:\data\cc.csv
+***********************************
+
+
+
+
+Install packages  in R  --- RODBC and RODBCext
+
+
+
+
+
+
+
+cmm.R File -- script 
+
+*********************************
+args <- commandArgs(trailingOnly = TRUE)
+
+library(RODBCext)
+library(RODBC)
+
+
+f<- args[1]
+e <-args[2]
+d<- args[3]
+t <- args[4]
+cf<-args[5]
+
+
+
+
+
+
+
+s <- "SELECT  *
+  FROM [AdventureWorks2014].[Purchasing].[PurchaseOrderDetail]
+
+  where purchaseorderID = ?   and     StockedQty <= ? "
+
+
+
+ConnectionString <- paste('driver={SQL Server};server=',f,';database=',e,';uid=',d,'; pwd=',t,';trusted_connection=no',sep="")
+
+
+conn <- odbcDriverConnect(ConnectionString) 
+
+
+cf2 <- read.csv(paste(cf), stringsAsFactors = F)
+
+
+
+
+
+cf3<- data.frame(cf2 )
+
+
+
+
+
+cf3
+
+
+
+
+
+data <- data.frame(sqlExecute (  conn, paste(s),data=cf3,   fetch=TRUE))
+
+data 
+
+write.csv(data,file="d:/data/ccdmm.csv")
+
+
+close(conn)
+
+******************************************************
+
+
+
+
+This is the cc.csv file
+
+
+which just contains two parameters
+
+PO and SO -- i will attach the file 
+
+
+
+
+-----
+
+so place file cmm.R  in the data directory under C
+
+also the cc.csv under  data directory
+
+
+then install RODBC and RODBCext  in R
+
+
+Then R the script command (commandline)
+
+
+
+The args[] from 1 to 6 are the arguments padded in the cmd line which we need to pass it on the browser. arg[5] is the file path of the query parameter. 
+
+
+
+Server settings 
+
+SQL express can do and i will send you the bak for adbvetureworks 2014.
+
+
+
+
+
+
+
+

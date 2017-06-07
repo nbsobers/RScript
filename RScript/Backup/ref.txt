@@ -1,0 +1,8 @@
+﻿https://stackoverflow.com/questions/20268477/iis-express-increse-memory-limit
+
+Run on IISExpress64 bit
+Install Rscript 32 ^ 64
+Install R packages RODBC and RODBCext
+Add R bin foler path in PATH variable(to load packages)
+argumnet order is different  from application and command line
+
