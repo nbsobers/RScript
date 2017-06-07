@@ -4,14 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using RDotNet;
 using log4net;
 
 namespace RScript.Controllers
 {
-
     public class HomeController : Controller
     {
         private static log4net.ILog Log { get; set; }
@@ -20,10 +18,19 @@ namespace RScript.Controllers
 
         public HomeController()
         {
-            if (engine != null) return;
+            try
+            {
+                if (engine != null) return;
 
-            engine = REngine.GetInstance();
-            engine.Initialize();
+                engine = REngine.GetInstance();
+                engine.Initialize();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+                throw ex;
+            }
+           
         }
 
         public ActionResult Index(int? modelId)
@@ -39,9 +46,29 @@ namespace RScript.Controllers
         [HttpPost]
         public JsonResult GenerateReort(GenerateReportModel model)
         {
+            var response = new ResponseModel() {IsSuccess = false };
             try
             {
                 log.Debug(model);
+                string errorMessage = "Model is not valid: ";
+
+                if (!ModelState.IsValid)
+                {                    
+                    foreach (ModelState modelState in ViewData.ModelState.Values)
+                    {
+                        foreach (ModelError error in modelState.Errors)
+                        {
+                            errorMessage = errorMessage + "; " + error.ErrorMessage;
+                        }
+                    }
+
+                    if (Request.Files.Count == 0) {
+                        errorMessage = errorMessage + "; " + "File not selected";
+                    }
+                   
+                    response.Message = errorMessage;
+                    return Json(response);
+                }
 
                 if (Request.Files.Count > 0)
                 {
@@ -80,6 +107,7 @@ namespace RScript.Controllers
 
                         string expression = string.Format("source('{0}')", rScriptFile);
                         engine.Evaluate(expression);
+                        response.IsSuccess = true;
                         // engine.Evaluate("source('C:/01_Dev/POC/RScript/RScript/Reference/model1.R')");
                         //Rscript  D:\Dev\POC\RScript\RScript\Reference\cmm.R LPT-002384\SQLEXPRESS  AdventureWorks2016CTP3 sa Soders@123 D:\Dev\POC\RScript\RScript\Reference\cc.csv
                         //"C:\Program Files\R\R-3.4.0\bin\i386\Rscript"  C:\01_Dev\POC\RScript\RScript\Commands\model1.R SOBS-DELL-3470\MSSQL2016  AdventureWorks2016CTP3 rscript Rscript@123 C:\01_Dev\POC\RScript\RScript\Uploads\cc.csv
@@ -88,37 +116,51 @@ namespace RScript.Controllers
 
                         //}
                     }
+                } else{
+                    errorMessage = errorMessage + "; " + "File not selected";
+                    response.Message = errorMessage;
                 }
 
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);              
+                response.Message = ex.Message;
+            }
+
+            return Json(response);
+        }
+
+        public JsonResult GetData()
+        {
+            try
+            {
+                var path = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
+                var response = new List<Model1Response>();
+
+                if (System.IO.File.Exists(path))
+                {
+                    using (TextReader fileReader = System.IO.File.OpenText(path))
+                    {
+                        var csv = new CsvReader(fileReader);
+                        csv.Configuration.HasHeaderRecord = true;
+                        response = csv.GetRecords<Model1Response>().ToList();
+                    }
+                }
+                var gridRes = new GridResponse<Model1Response>();
+                gridRes.current = 1;
+                gridRes.rowCount = new int[1];
+                gridRes.rowCount[0] = -1;
+                gridRes.total = response.Count;
+                gridRes.rows = response;
+
+                return Json(gridRes);
             }
             catch (Exception ex)
             {
                 log.Error(ex);
                 return Json(ex);
             }
-
-            return null;
-        }
-
-        public JsonResult GetData()
-        {
-            var path = Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");
-            var response = new List<Model1Response>();
-            using (TextReader fileReader = System.IO.File.OpenText(path))
-            {
-                var csv = new CsvReader(fileReader);
-                csv.Configuration.HasHeaderRecord = true;
-                response = csv.GetRecords<Model1Response>().ToList();
-            }
-
-            var gridRes = new GridResponse<Model1Response>();
-            gridRes.current = 1;
-            gridRes.rowCount = new int[1];
-            gridRes.rowCount[0] = -1;
-            gridRes.total = response.Count;
-            gridRes.rows = response;
-
-            return Json(gridRes);
         }
 
     }

@@ -1,2 +1,0 @@
-﻿https://stackoverflow.com/questions/20268477/iis-express-increse-memory-limit
-

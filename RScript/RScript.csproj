@@ -164,6 +164,7 @@
     </Compile>
     <Compile Include="Models\GenerateReportModel.cs" />
     <Compile Include="Models\GridResponse.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,24 +179,23 @@
     <Content Include="Content\Site.css" />
     <Content Include="Commands\model1.R" />
     <Content Include="Commands\temp.R" />
-    <None Include="Output\BK_Generated.csv" />
-    <Content Include="Reference\IBU  R scripts.txt" />
-    <Content Include="Reference\image.png" />
-    <Content Include="Reference\ref.txt" />
+    <Content Include="Backup\IBU  R scripts.txt" />
+    <Content Include="Backup\image.png" />
+    <Content Include="Backup\ref.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Reference\cc.csv" />
-    <Content Include="Reference\ccdmm.csv" />
-    <Content Include="Reference\image.png_4" />
-    <Content Include="Reference\cmm1.R" />
-    <Content Include="Reference\samplearg.R" />
-    <Content Include="Reference\temp.R" />
-    <Content Include="Reference\model1.R" />
-    <Content Include="Reference\cc-small.csv" />
+    <Content Include="Backup\cc.csv" />
+    <Content Include="Backup\ccdmm.csv" />
+    <Content Include="Backup\image.png_4" />
+    <Content Include="Backup\cmm1.R" />
+    <Content Include="Backup\samplearg.R" />
+    <Content Include="Backup\temp.R" />
+    <Content Include="Backup\model1.R" />
+    <Content Include="Backup\cc-small.csv" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Output\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>

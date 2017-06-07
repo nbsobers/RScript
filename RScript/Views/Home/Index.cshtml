@@ -99,13 +99,19 @@
             uploadProgress: function (event, position, total, percentComplete) {
 
             },
-            success: function () {
-                console.log("success");
-                showGrid();
+            success: function (res) {
+                console.log("in success");
+
+                if (res.IsSuccess) {
+                    showGrid();
+                } else {
+                    alert(res.Message);
+                }
+               
                 $('#btnGenerate').text('Generate Report');
             },
             complete: function (xhr) {
-                console.log("complete");
+                console.log("in complete");
             }
         });
 
