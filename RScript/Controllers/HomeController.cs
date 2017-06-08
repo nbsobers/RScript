@@ -89,6 +89,14 @@ namespace RScript.Controllers
                         //using (REngine engine = REngine.GetInstance())
                         //{
                         var rScriptFile = Path.Combine(Server.MapPath("~/Commands/"), string.Format("model{0}.R", model.ModelId));
+
+                        if (!System.IO.File.Exists(rScriptFile))
+                        {
+                            log.Error(string.Format("Script doesnt exists: {0}", rScriptFile));
+                            response.Message = string.Format("Script doesnt exists: {0}", rScriptFile);
+                            return Json(response);
+                        }
+
                         rScriptFile = rScriptFile.Replace("\\", "/");
                         log.Debug(rScriptFile);
                         var outputFile = getOutputFile(); //Path.Combine(Server.MapPath("~/Output/"), "Generated.csv");

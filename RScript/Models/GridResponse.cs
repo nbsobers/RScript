@@ -28,7 +28,7 @@ namespace RScript.Models
 
         public int PurchaseOrderDetailID { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public String DueDate { get; set; }
 
         public Decimal OrderQty { get; set; }
 
@@ -44,7 +44,7 @@ namespace RScript.Models
 
         public int StockedQty { get; set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public String ModifiedDate { get; set; }
         
     }
 }
